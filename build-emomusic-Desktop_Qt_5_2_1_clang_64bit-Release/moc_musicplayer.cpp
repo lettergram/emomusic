@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_musicPlayer_t {
-    QByteArrayData data[5];
-    char stringdata[85];
+    QByteArrayData data[6];
+    char stringdata[114];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,10 +33,12 @@ QT_MOC_LITERAL(0, 0, 11),
 QT_MOC_LITERAL(1, 12, 26),
 QT_MOC_LITERAL(2, 39, 0),
 QT_MOC_LITERAL(3, 40, 21),
-QT_MOC_LITERAL(4, 62, 21)
+QT_MOC_LITERAL(4, 62, 21),
+QT_MOC_LITERAL(5, 84, 28)
     },
     "musicPlayer\0on_playPauseButton_clicked\0"
     "\0on_loadButton_clicked\0on_skipButton_clicked\0"
+    "on_volumeSlider_valueChanged\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -46,7 +48,7 @@ static const uint qt_meta_data_musicPlayer[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -54,14 +56,16 @@ static const uint qt_meta_data_musicPlayer[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   29,    2, 0x08,
-       3,    0,   30,    2, 0x08,
-       4,    0,   31,    2, 0x08,
+       1,    0,   34,    2, 0x08,
+       3,    0,   35,    2, 0x08,
+       4,    0,   36,    2, 0x08,
+       5,    1,   37,    2, 0x08,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,    2,
 
        0        // eod
 };
@@ -74,10 +78,10 @@ void musicPlayer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 0: _t->on_playPauseButton_clicked(); break;
         case 1: _t->on_loadButton_clicked(); break;
         case 2: _t->on_skipButton_clicked(); break;
+        case 3: _t->on_volumeSlider_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObject musicPlayer::staticMetaObject = {
@@ -105,13 +109,13 @@ int musicPlayer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 4;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
+        if (_id < 4)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 3;
+        _id -= 4;
     }
     return _id;
 }

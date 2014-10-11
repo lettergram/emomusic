@@ -19,10 +19,9 @@ public:
 
 private slots:
     void on_playPauseButton_clicked();
-
     void on_loadButton_clicked();
-
     void on_skipButton_clicked();
+    void on_volumeSlider_valueChanged(int);
 
 private:
     Ui::musicPlayer *ui;
