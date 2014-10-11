@@ -1,6 +1,7 @@
 #include "musicplayer.h"
 #include "ui_musicplayer.h"
 #include <QMessageBox>
+#include <QFileDialog>
 
 
 musicPlayer::musicPlayer(QWidget *parent) :
@@ -74,9 +75,24 @@ void musicPlayer::on_playPauseButton_clicked()
 
 void musicPlayer::on_loadButton_clicked()
 {
-    QMessageBox msgBox;
-     msgBox.setText("Load Track Button Clicked");
-     msgBox.exec();
+    QDir dir(QApplication::applicationDirPath());
+
+    int i = 0;
+    while(!dir.cd("Music")){
+        dir.cdUp();
+        if(i++ == 5){ break; }
+    }
+
+    try{
+        dir.cd("Music");
+    }catch(int e){
+        std::cout << e << std::endl;
+    }
+
+    QString fileName = QFileDialog::getOpenFileName(this, "Select a file to open...", dir.absolutePath());
+    if(fileName == NULL){ return; }
+
+    playlist->addMedia(QUrl::fromLocalFile(fileName));
 
 
 }

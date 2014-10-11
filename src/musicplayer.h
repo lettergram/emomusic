@@ -1,6 +1,7 @@
 #ifndef MUSICPLAYER_H
 #define MUSICPLAYER_H
 
+#include <iostream>
 #include <QMainWindow>
 #include <QtMultimedia>
 
