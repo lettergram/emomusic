@@ -79,7 +79,11 @@ void musicPlayer::on_loadButton_clicked()
 
     int i = 0;
     while(!dir.cd("Music")){
-        dir.cdUp();
+        try{
+            dir.cdUp();
+        }catch(int e){
+            std::cout << e << std::endl;
+        }
         if(i++ == 5){ break; }
     }
 
@@ -89,12 +93,14 @@ void musicPlayer::on_loadButton_clicked()
         std::cout << e << std::endl;
     }
 
-    QString fileName = QFileDialog::getOpenFileName(this, "Select a file to open...", dir.absolutePath());
-    if(fileName == NULL){ return; }
+    QString absFileName = QFileDialog::getOpenFileName(this, "Select a file to open...", dir.absolutePath());
+    if(absFileName == NULL){ return; }
 
-    playlist->addMedia(QUrl::fromLocalFile(fileName));
+    playlist->addMedia(QUrl::fromLocalFile(absFileName));
+    QStringList fileName = absFileName.split("/", QString::KeepEmptyParts);
+    QStringList songTitle = fileName[fileName.size() - 1].split(".", QString::KeepEmptyParts);
 
-
+    ui->listWidget->addItem(songTitle[0]);
 }
 
 void musicPlayer::on_skipButton_clicked()
