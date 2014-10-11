@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Play/Pause</string>
+     <string>Play</string>
     </property>
    </widget>
    <widget class="QPushButton" name="skipButton">
@@ -51,6 +51,16 @@
     </property>
     <property name="text">
      <string>Load Track</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listWidget">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>30</y>
+      <width>256</width>
+      <height>192</height>
+     </rect>
     </property>
    </widget>
   </widget>

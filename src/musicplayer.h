@@ -21,8 +21,12 @@ private slots:
 
     void on_loadButton_clicked();
 
+    void on_skipButton_clicked();
+
 private:
     Ui::musicPlayer *ui;
+    QMediaPlaylist* playlist;
+    QMediaPlayer* player;
 
 };
 
