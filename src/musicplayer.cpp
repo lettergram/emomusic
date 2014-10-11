@@ -23,7 +23,7 @@ musicPlayer::musicPlayer(QWidget *parent) :
 
     playlist->setCurrentIndex(0);
     player->setPlaylist(playlist);
-    player->setVolume(100);
+    player->setVolume(50);
 
        //Use metadata instead here
             //Get metadata of track
@@ -113,5 +113,11 @@ void musicPlayer::on_skipButton_clicked()
     ui->listWidget->setCurrentRow(playlist->currentIndex());
 
 
+
+}
+
+void musicPlayer::on_volumeSlider_valueChanged(int value)
+{
+    player->setVolume(value);
 
 }
