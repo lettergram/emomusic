@@ -2,6 +2,9 @@
 #define MUSICPLAYER_H
 
 #include <iostream>
+
+#include <QMessageBox>
+#include <QFileDialog>
 #include <QMainWindow>
 #include <QtMultimedia>
 
@@ -22,12 +25,15 @@ private slots:
     void on_loadButton_clicked();
     void on_skipButton_clicked();
     void on_volumeSlider_valueChanged(int);
+    void on_timeSlider_sliderMoved(int position);
+    void updateTime(qint64);
 
 private:
     Ui::musicPlayer *ui;
     QMediaPlaylist* playlist;
     QMediaPlayer* player;
-
+    QDir * findMusic();
+    void addMusic(QDir *, QStringList);
 };
 
 #endif // MUSICPLAYER_H

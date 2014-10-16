@@ -22,6 +22,13 @@
       </property>
      </widget>
     </item>
+    <item row="1" column="2">
+     <widget class="QPushButton" name="skipButton">
+      <property name="text">
+       <string>Skip Track</string>
+      </property>
+     </widget>
+    </item>
     <item row="5" column="2">
      <widget class="QSlider" name="volumeSlider">
       <property name="maximumSize">
@@ -41,22 +48,15 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="1" rowspan="8">
-     <widget class="QListWidget" name="listWidget"/>
-    </item>
-    <item row="1" column="2">
-     <widget class="QPushButton" name="skipButton">
-      <property name="text">
-       <string>Skip Track</string>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="2">
      <widget class="QPushButton" name="playPauseButton">
       <property name="text">
        <string>Play</string>
       </property>
      </widget>
+    </item>
+    <item row="0" column="1" rowspan="8">
+     <widget class="QListWidget" name="listWidget"/>
     </item>
     <item row="4" column="2">
      <widget class="QLabel" name="label">
@@ -77,6 +77,26 @@
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="1">
+     <widget class="QSlider" name="timeSlider">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="tickPosition">
+       <enum>QSlider::TicksBothSides</enum>
+      </property>
+      <property name="tickInterval">
+       <number>60000</number>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="2">
+     <widget class="QLabel" name="timeLabel">
+      <property name="text">
+       <string>time / duration</string>
       </property>
      </widget>
     </item>
