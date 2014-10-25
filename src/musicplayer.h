@@ -7,6 +7,7 @@
 #include <QFileDialog>
 #include <QMainWindow>
 #include <QtMultimedia>
+#include <QMovie>
 
 namespace Ui {
 class musicPlayer;
@@ -27,14 +28,18 @@ private slots:
     void on_volumeSlider_valueChanged(int);
     void on_timeSlider_sliderMoved(int position);
     void updateTime(qint64);
+    void on_songList_doubleClicked(const QModelIndex &index);
 
 private:
     Ui::musicPlayer *ui;
     QMediaPlaylist* playlist;
     QMediaPlayer* player;
+    QMovie * gif;
     QDir * findMusic();
+
     void addMusic(QDir *, QStringList);
     void displayMetadata();
+    void addGif();
 };
 
 #endif // MUSICPLAYER_H
