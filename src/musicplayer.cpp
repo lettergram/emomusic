@@ -53,13 +53,13 @@ void musicPlayer::addGif(){
  */
 void musicPlayer::on_playPauseButton_clicked()
 {
+
     //PLAY AUDIO FROM START
     //CHECK IF AUDIO STOPPED
     if (player->state() == 0){
         player->play();
         connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(updateTime(qint64)));
         ui->playPauseButton->setText("Pause");
-        displayMetadata();
         gif->start();
         return;
     }
@@ -69,8 +69,6 @@ void musicPlayer::on_playPauseButton_clicked()
     else if (player->state() == 1){
         player->pause();
         ui->playPauseButton->setText("Resume");
-        displayMetadata();
-
         gif->stop();
         return;
     }
@@ -80,13 +78,9 @@ void musicPlayer::on_playPauseButton_clicked()
     else if (player->state() == 2){
         player->play();
         ui->playPauseButton->setText("Pause");
-        displayMetadata();
-
         gif->start();
         return;
     }
-
-
 }
 
 /**
@@ -140,11 +134,12 @@ void musicPlayer::addMusic(QDir * dir, QStringList fileNames){
 
 void musicPlayer::displayMetadata()
 {
+    if(!player->isAvailable()){ return; }
+
     QString title = player->metaData("Title").toString();
     QString artist = player->metaData("AlbumArtist").toString();
     QString album = player->metaData("AlbumTitle").toString();
-
-    ui->trackDataLabel->setText(title + "\n" + artist + "\n" + album);
+    ui->trackDataLabel->setText(title + " / " + artist + " / " + album);
 }
 
 /**
@@ -187,14 +182,11 @@ void musicPlayer::on_loadButton_clicked()
  */
 void musicPlayer::on_skipButton_clicked()
 {
-
-    player->stop();
     playlist->setCurrentIndex(playlist->nextIndex());
-    player->play();
     ui->songList->setCurrentRow(playlist->currentIndex());
-    displayMetadata();
-
-
+    player->play();
+    ui->playPauseButton->setText("Pause");
+    gif->start();
 }
 
 /**
@@ -228,10 +220,11 @@ void musicPlayer::updateTime(qint64 progress){
     QString durMin;
     durMin.sprintf("%3.3d", int(player->duration() / 60000));
 
-    QString cur = curMin + "." + curSec;
-    QString dur = durMin + "." + durSec;
+    QString cur = curMin + ":" + curSec;
+    QString dur = durMin + ":" + durSec;
 
     ui->timeLabel->setText(cur + "/" + dur);
+    displayMetadata(); // TODO Change
 }
 
 
@@ -246,12 +239,6 @@ void musicPlayer::on_timeSlider_sliderMoved(int position){
  * @param index - Index of songList, i.e. song to play
  */
 void musicPlayer::on_songList_doubleClicked(const QModelIndex &index){
-
-    std::cout << QString::number(index.row()).toStdString() << std::endl;
     player->playlist()->setCurrentIndex(index.row());
     on_playPauseButton_clicked();
-    if (player->state() == 2){
-            player->play();
-            ui->playPauseButton->setText("Pause");
-    }
 }
