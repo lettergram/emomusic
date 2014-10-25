@@ -15,7 +15,7 @@ musicPlayer::musicPlayer(QWidget *parent) :
     QStringList fileNames = musicDir->entryList();
     addMusic(musicDir, fileNames);
     player->setVolume(50);
-    ui->listWidget->setCurrentRow(0);
+    ui->songList->setCurrentRow(0);
 }
 
 musicPlayer::~musicPlayer()
@@ -85,12 +85,12 @@ void musicPlayer::addMusic(QDir * dir, QStringList fileNames){
             for(int j = 0; j < file.size() - 1; j++){
                 name += file[j];
             }
-            ui->listWidget->addItem(name);
+            ui->songList->addItem(name);
        }
     }
     playlist->setCurrentIndex(0);
     player->setPlaylist(playlist);
-    ui->listWidget->setCurrentRow(0);
+    ui->songList->setCurrentRow(0);
 }
 
 void musicPlayer::on_loadButton_clicked()
@@ -120,7 +120,7 @@ void musicPlayer::on_loadButton_clicked()
     QStringList fileName = absFileName.split("/", QString::KeepEmptyParts);
     QStringList songTitle = fileName[fileName.size() - 1].split(".", QString::KeepEmptyParts);
 
-    ui->listWidget->addItem(songTitle[0]);
+    ui->songList->addItem(songTitle[0]);
 }
 
 void musicPlayer::on_skipButton_clicked()
@@ -128,7 +128,7 @@ void musicPlayer::on_skipButton_clicked()
     player->stop();
     playlist->setCurrentIndex(playlist->nextIndex());
     player->play();
-    ui->listWidget->setCurrentRow(playlist->currentIndex());
+    ui->songList->setCurrentRow(playlist->currentIndex());
 }
 
 void musicPlayer::on_volumeSlider_valueChanged(int value)
