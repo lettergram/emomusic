@@ -28,6 +28,8 @@ private slots:
     void on_timeSlider_sliderMoved(int position);
     void updateTime(qint64);
 
+    void on_songList_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::musicPlayer *ui;
     QMediaPlaylist* playlist;
