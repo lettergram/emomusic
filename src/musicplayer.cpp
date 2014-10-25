@@ -16,11 +16,35 @@ musicPlayer::musicPlayer(QWidget *parent) :
     addMusic(musicDir, fileNames);
     player->setVolume(50);
     ui->songList->setCurrentRow(0);
+    addGif();
+
 }
 
 musicPlayer::~musicPlayer()
 {
     delete ui;
+}
+
+/**
+ * @brief musicPlayer::addGif
+ *          If no EEG is connected, use gif.
+ *          This loads it from images/loader.gif
+ */
+void musicPlayer::addGif(){
+    QGraphicsScene * scene = new QGraphicsScene();
+    QDir * dir = new QDir();
+
+    while(!dir->cd("images"))
+        dir->cdUp();
+
+    QLabel *gif_anim = new QLabel();
+    gif = new QMovie(dir->absolutePath() + "/loader.gif");
+    gif_anim->setMovie(gif);
+    gif->start();
+    scene->addWidget(gif_anim);
+    ui->waveView->setScene(scene);
+    delete dir;
+    gif->stop();
 }
 
 /**
@@ -35,6 +59,7 @@ void musicPlayer::on_playPauseButton_clicked()
         player->play();
         connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(updateTime(qint64)));
         ui->playPauseButton->setText("Pause");
+        gif->start();
         return;
     }
 
@@ -43,6 +68,7 @@ void musicPlayer::on_playPauseButton_clicked()
     else if (player->state() == 1){
         player->pause();
         ui->playPauseButton->setText("Resume");
+        gif->stop();
         return;
     }
 
@@ -51,6 +77,7 @@ void musicPlayer::on_playPauseButton_clicked()
     else if (player->state() == 2){
         player->play();
         ui->playPauseButton->setText("Pause");
+        gif->start();
         return;
     }
 
