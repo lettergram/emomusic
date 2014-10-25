@@ -31,6 +31,7 @@ void musicPlayer::on_playPauseButton_clicked()
         player->play();
         connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(updateTime(qint64)));
         ui->playPauseButton->setText("Pause");
+        displayMetadata();
         return;
     }
 
@@ -39,6 +40,8 @@ void musicPlayer::on_playPauseButton_clicked()
     else if (player->state() == 1){
         player->pause();
         ui->playPauseButton->setText("Resume");
+        displayMetadata();
+
         return;
     }
 
@@ -47,6 +50,8 @@ void musicPlayer::on_playPauseButton_clicked()
     else if (player->state() == 2){
         player->play();
         ui->playPauseButton->setText("Pause");
+        displayMetadata();
+
         return;
     }
 
@@ -93,6 +98,15 @@ void musicPlayer::addMusic(QDir * dir, QStringList fileNames){
     ui->songList->setCurrentRow(0);
 }
 
+void musicPlayer::displayMetadata()
+{
+    QString title = player->metaData("Title").toString();
+    QString artist = player->metaData("AlbumArtist").toString();
+    QString album = player->metaData("AlbumTitle").toString();
+
+    ui->trackDataLabel->setText(title + "\n" + artist + "\n" + album);
+}
+
 void musicPlayer::on_loadButton_clicked()
 {
     QDir dir(QApplication::applicationDirPath());
@@ -125,15 +139,20 @@ void musicPlayer::on_loadButton_clicked()
 
 void musicPlayer::on_skipButton_clicked()
 {
+
     player->stop();
     playlist->setCurrentIndex(playlist->nextIndex());
     player->play();
     ui->songList->setCurrentRow(playlist->currentIndex());
+    displayMetadata();
+
+
 }
 
 void musicPlayer::on_volumeSlider_valueChanged(int value)
 {
     player->setVolume(value);
+
 
 }
 

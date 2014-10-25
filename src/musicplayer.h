@@ -34,6 +34,7 @@ private:
     QMediaPlayer* player;
     QDir * findMusic();
     void addMusic(QDir *, QStringList);
+    void displayMetadata();
 };
 
 #endif // MUSICPLAYER_H
