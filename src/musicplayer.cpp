@@ -34,17 +34,21 @@ void musicPlayer::addGif(){
     QGraphicsScene * scene = new QGraphicsScene();
     QDir * dir = new QDir();
 
-    while(!dir->cd("images"))
-        dir->cdUp();
+    try{
+        while(!dir->cd("images"))
+            dir->cdUp();
 
-    QLabel *gif_anim = new QLabel();
-    gif = new QMovie(dir->absolutePath() + "/loader.gif");
-    gif_anim->setMovie(gif);
-    gif->start();
-    scene->addWidget(gif_anim);
-    ui->waveView->setScene(scene);
-    delete dir;
-    gif->stop();
+        QLabel *gif_anim = new QLabel();
+        gif = new QMovie(dir->absolutePath() + "/loader.gif");
+        gif_anim->setMovie(gif);
+        gif->start();
+        scene->addWidget(gif_anim);
+        ui->waveView->setScene(scene);
+        delete dir;
+        gif->stop();
+    }catch(int e){
+        std::cout << "Gif Error: " << e << std::endl;
+    }
 }
 
 /**
@@ -60,7 +64,7 @@ void musicPlayer::on_playPauseButton_clicked()
         player->play();
         connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(updateTime(qint64)));
         ui->playPauseButton->setText("Pause");
-        gif->start();
+        if(gif != NULL){ gif->start(); }
         return;
     }
 
@@ -69,7 +73,7 @@ void musicPlayer::on_playPauseButton_clicked()
     else if (player->state() == 1){
         player->pause();
         ui->playPauseButton->setText("Resume");
-        gif->stop();
+        if(gif != NULL){ gif->stop(); }
         return;
     }
 
@@ -78,7 +82,7 @@ void musicPlayer::on_playPauseButton_clicked()
     else if (player->state() == 2){
         player->play();
         ui->playPauseButton->setText("Pause");
-        gif->start();
+        if(gif != NULL){ gif->start(); }
         return;
     }
 }
@@ -186,7 +190,7 @@ void musicPlayer::on_skipButton_clicked()
     ui->songList->setCurrentRow(playlist->currentIndex());
     player->play();
     ui->playPauseButton->setText("Pause");
-    gif->start();
+    if(gif != NULL){ gif->start(); }
 }
 
 /**
