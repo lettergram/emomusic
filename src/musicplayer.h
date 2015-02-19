@@ -8,9 +8,11 @@
 #include <QMainWindow>
 #include <QtMultimedia>
 #include <QMovie>
+#include <QPixmap>
+#include <QGraphicsScene>
 
 namespace Ui {
-class musicPlayer;
+    class musicPlayer;
 }
 
 class musicPlayer : public QMainWindow
@@ -30,16 +32,25 @@ private slots:
     void updateTime(qint64);
     void on_songList_doubleClicked(const QModelIndex &index);
 
+    void on_moodBox_activated(const QString &arg1);
+
 private:
-    Ui::musicPlayer *ui;
+    Ui::musicPlayer* ui;
     QMediaPlaylist* playlist;
     QMediaPlayer* player;
-    QMovie * gif;
-    QDir * findMusic();
+    int moodIndex;
+    QDir * imageDir;
+    QIcon * whiteDoubleArrowIcon;
 
+    QDir* findMusic();
     void addMusic(QDir *, QStringList);
     void displayMetadata();
-    void addGif();
+    QString songDuration();
+    QString songCurrent();
+
+    void playIcon();
+    void pauseIcon();
+    void skipIcon();
 };
 
 #endif // MUSICPLAYER_H

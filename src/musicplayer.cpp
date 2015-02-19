@@ -4,67 +4,63 @@
 
 musicPlayer::musicPlayer(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::musicPlayer)
-{
+    ui(new Ui::musicPlayer){
+
     ui->setupUi(this);
     playlist = new QMediaPlaylist();
     player = new QMediaPlayer();
-
 
     QDir * musicDir = findMusic();
     QStringList fileNames = musicDir->entryList();
     addMusic(musicDir, fileNames);
     player->setVolume(50);
-    ui->songList->setCurrentRow(0);
-    addGif();
 
+
+    imageDir = new QDir();
+    while(!imageDir->cd("images"))
+        imageDir->cdUp();
+
+    moodIndex = 0;
+
+    QPixmap whiteArrow;
+    whiteArrow.load(imageDir->absolutePath() + "/white-arrows.png");
+    whiteDoubleArrowIcon = new QIcon();
+    whiteDoubleArrowIcon->addPixmap(whiteArrow);
+    ui->moodBox->setItemIcon(moodIndex, *whiteDoubleArrowIcon);
+
+    skipIcon();
+    playIcon();
 }
 
-musicPlayer::~musicPlayer()
-{
+void musicPlayer::playIcon(){
+
+    ui->playPauseButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
+}
+
+void musicPlayer::pauseIcon(){
+    ui->playPauseButton->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
+}
+
+void musicPlayer::skipIcon(){
+    ui->skipButton->setIcon(style()->standardIcon(QStyle::SP_MediaSeekForward));
+}
+
+musicPlayer::~musicPlayer(){
     delete ui;
-}
-
-/**
- * @brief musicPlayer::addGif
- *          If no EEG is connected, use gif.
- *          This loads it from images/loader.gif
- */
-void musicPlayer::addGif(){
-    QGraphicsScene * scene = new QGraphicsScene();
-    QDir * dir = new QDir();
-
-    try{
-        while(!dir->cd("images"))
-            dir->cdUp();
-
-        QLabel *gif_anim = new QLabel();
-        gif = new QMovie(dir->absolutePath() + "/loader.gif");
-        gif_anim->setMovie(gif);
-        gif->start();
-        scene->addWidget(gif_anim);
-        ui->waveView->setScene(scene);
-        delete dir;
-        gif->stop();
-    }catch(int e){
-        std::cout << "Gif Error: " << e << std::endl;
-    }
 }
 
 /**
  * @brief musicPlayer::on_playPauseButton_clicked:
  *          Enables play, pause, resumeof a song
  */
-void musicPlayer::on_playPauseButton_clicked()
-{
+void musicPlayer::on_playPauseButton_clicked(){
 
     //PLAY AUDIO FROM START
     //CHECK IF AUDIO STOPPED
     if (player->state() == 0){
         player->play();
         connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(updateTime(qint64)));
-        ui->playPauseButton->setText("Pause");
-        if(gif != NULL){ gif->start(); }
+        pauseIcon();
         return;
     }
 
@@ -72,8 +68,7 @@ void musicPlayer::on_playPauseButton_clicked()
     //CHECK IF AUDIO PLAYING
     else if (player->state() == 1){
         player->pause();
-        ui->playPauseButton->setText("Resume");
-        if(gif != NULL){ gif->stop(); }
+        playIcon();
         return;
     }
 
@@ -81,8 +76,7 @@ void musicPlayer::on_playPauseButton_clicked()
     //CHECK IF AUDIO IS PAUSED
     else if (player->state() == 2){
         player->play();
-        ui->playPauseButton->setText("Pause");
-        if(gif != NULL){ gif->start(); }
+        pauseIcon();
         return;
     }
 }
@@ -115,34 +109,85 @@ QDir * musicPlayer::findMusic(){
  * @brief musicPlayer::addMusic: Used to add music to the playlist
  * @param dir: Directory music is located inside
  * @param fileNames: fileNames of songs to add
+ *
+ *
+ * TODO: Replace with working metadata collector
  */
 void musicPlayer::addMusic(QDir * dir, QStringList fileNames){
+
     for(int i = 0; i < fileNames.size(); i++){
         QStringList file = fileNames[i].split(".", QString::KeepEmptyParts);
-
         if(0 == file[file.size() - 1].compare("mp3")
         || 0 == file[file.size() - 1].compare("wav")){
             playlist->addMedia(QUrl::fromLocalFile(dir->absolutePath() + '/' + fileNames[i]));
-
-            QString name = "";
-            for(int j = 0; j < file.size() - 1; j++){
-                name += file[j];
-            }
-            ui->songList->addItem(name);
        }
     }
-    playlist->setCurrentIndex(0);
+
     player->setPlaylist(playlist);
-    ui->songList->setCurrentRow(0);
+    std::cout << "MediaCount: " << player->playlist()->mediaCount() << std::endl;
+
+    /* Name, Duration, Artist, Album, Duration */
+    for(int i = playlist->mediaCount() - 1; i > -1; i--){
+        player->playlist()->setCurrentIndex(i);
+
+        QStringList absoluteSongFileName = player->currentMedia().canonicalUrl().toString().split("/");
+        QStringList songName = absoluteSongFileName[absoluteSongFileName.size() - 1].split(".");
+        QString name = "";
+
+        for(int i = 0; i < songName.size()-1; i++)
+            name += songName[i] + " ";
+        name.remove(name.size() - 1, 1);
+
+        displayMetadata();
+        if(0 == songName[songName.size() - 1].compare("mp3")
+        || 0 == songName[songName.size() - 1].compare("wav")){
+            QTreeWidgetItem * t = new QTreeWidgetItem();
+            t->setText(0, name);
+            t->setText(1, songDuration());
+            t->setText(2, player->metaData("AlbumArtist").toString());
+            t->setText(3, player->metaData("AlbumTitle").toString());
+            t->setText(4, "None: " + QString::number(i));
+            ui->songList->insertTopLevelItem(0, t);
+        }
+    }
+
+    playlist->setCurrentIndex(playlist->mediaCount()-1);
+    ui->songList->setCurrentItem(ui->songList->itemAt(0,0));
+    ui->songList->setItemSelected(ui->songList->currentItem(),true);
 }
 
-void musicPlayer::displayMetadata()
-{
+QString musicPlayer::songDuration(){
+    QString durSec;
+    durSec.sprintf("%2.2d", int(player->duration() % 60000) / 1000);
+    QString durMin;
+    durMin.sprintf("%2.2d", int(player->duration() / 60000));
+    QString durHour;
+    durHour.sprintf("%2.2d", int(player->duration() / 60000) / 60);
+    return durHour + ":" + durMin + ":" + durSec;
+}
+
+QString musicPlayer::songCurrent(){
+    QString curSec;
+    curSec.sprintf("%2.2d", int((player->position() % 60000) / 1000));
+    QString curMin;
+    curMin.sprintf("%2.2d", int(player->position() / 60000));
+    QString curHour;
+    curHour.sprintf("%2.2d", int(player->position() / 60000) / 60);
+    return curHour + ":" + curMin + ":" + curSec;
+}
+
+void musicPlayer::displayMetadata(){
+
     if(!player->isAvailable()){ return; }
 
     QString title = player->metaData("Title").toString();
     QString artist = player->metaData("AlbumArtist").toString();
     QString album = player->metaData("AlbumTitle").toString();
+
+    if(title.size() < 2){ title = "Title"; }
+    if(artist.size() < 2){ artist = "Artist"; }
+    if(album.size() < 2){ album = "Album"; }
+
     ui->trackDataLabel->setText(title + " / " + artist + " / " + album);
 }
 
@@ -150,8 +195,8 @@ void musicPlayer::displayMetadata()
  * @brief musicPlayer::on_loadButton_clicked
  *          Enables a user to load a song from a folder on their desktop
  */
-void musicPlayer::on_loadButton_clicked()
-{
+void musicPlayer::on_loadButton_clicked(){
+
     QDir dir(QApplication::applicationDirPath());
 
     int i = 0;
@@ -177,30 +222,63 @@ void musicPlayer::on_loadButton_clicked()
     QStringList fileName = absFileName.split("/", QString::KeepEmptyParts);
     QStringList songTitle = fileName[fileName.size() - 1].split(".", QString::KeepEmptyParts);
 
-    ui->songList->addItem(songTitle[0]);
+    playlist->setCurrentIndex(playlist->mediaCount()-1);
+
+    QTreeWidgetItem * t = new QTreeWidgetItem();
+    t->setText(0, player->metaData("Title").toString());
+    t->setText(1, songDuration());
+    t->setText(2, player->metaData("AlbumArtist").toString());
+    t->setText(3, player->metaData("AlbumTitle").toString());
+    t->setText(4, "None");
+    ui->songList->insertTopLevelItem(0, t);
 }
 
 /**
  * @brief musicPlayer::on_skipButton_clicked
  *          Skip to the next track on the playlist
+ *
+ * TODO: Busted, need to fix so it aligns, currently reverse
  */
-void musicPlayer::on_skipButton_clicked()
-{
-    playlist->setCurrentIndex(playlist->nextIndex());
-    ui->songList->setCurrentRow(playlist->currentIndex());
-    player->play();
-    ui->playPauseButton->setText("Pause");
-    if(gif != NULL){ gif->start(); }
+void musicPlayer::on_skipButton_clicked(){
+
+    on_playPauseButton_clicked();
+    QString albumArtist = player->metaData("AlbumArtist").toString();
+    QString albumTitle  = player->metaData("AlbumTitle").toString();
+
+    QTreeWidgetItem * current = ui->songList->currentItem();
+
+    current->setText(1, songDuration());
+    current->setText(2, albumArtist);
+    if(albumArtist.size() < 1)
+        current->setText(2, "Unknown");
+    current->setText(3, albumTitle);
+    if(albumTitle.size() < 1)
+        current->setText(3, "Unknown");
+    current->setText(4, "None");
+
+    QTreeWidgetItem * next = ui->songList->itemBelow(current);
+
+    if(playlist->previousIndex() == -1){
+        playlist->setCurrentIndex(playlist->mediaCount());
+    }
+    playlist->setCurrentIndex(playlist->previousIndex());
+
+    if(next == NULL){
+        next = ui->songList->itemAt(0,0);
+    }
+
+    ui->songList->setCurrentItem(next);
+    ui->songList->setItemSelected(next,true);
+
+    on_playPauseButton_clicked();
 }
 
 /**
  * @brief musicPlayer::on_volumeSlider_valueChanged - change volume
  * @param value - value to set volume to (out of 100)
  */
-void musicPlayer::on_volumeSlider_valueChanged(int value)
-{
+void musicPlayer::on_volumeSlider_valueChanged(int value){
     player->setVolume(value);
-
 }
 
 /**
@@ -214,20 +292,7 @@ void musicPlayer::updateTime(qint64 progress){
     if(player->duration() < 1)
         return;
 
-    QString curSec;
-    curSec.sprintf("%2.2d", int((progress % 60000) / 1000));
-    QString curMin;
-    curMin.sprintf("%3.3d", int(progress / 60000));
-
-    QString durSec;
-    durSec.sprintf("%2.2d", int(player->duration() % 60000) / 1000);
-    QString durMin;
-    durMin.sprintf("%3.3d", int(player->duration() / 60000));
-
-    QString cur = curMin + ":" + curSec;
-    QString dur = durMin + ":" + durSec;
-
-    ui->timeLabel->setText(cur + "/" + dur);
+    ui->timeLabel->setText(songCurrent() + "/" + songDuration());
     displayMetadata(); // TODO Change
 }
 
@@ -245,4 +310,11 @@ void musicPlayer::on_timeSlider_sliderMoved(int position){
 void musicPlayer::on_songList_doubleClicked(const QModelIndex &index){
     player->playlist()->setCurrentIndex(index.row());
     on_playPauseButton_clicked();
+}
+
+void musicPlayer::on_moodBox_activated(const QString &arg1){
+    std::cout << arg1.toStdString() << std::endl;
+    ui->moodBox->setItemIcon(moodIndex, QIcon());
+    moodIndex = ui->moodBox->currentIndex();
+    ui->moodBox->setItemIcon(moodIndex, *whiteDoubleArrowIcon);
 }
