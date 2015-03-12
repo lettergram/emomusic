@@ -19,7 +19,7 @@ void Worker::doWork()
         v.push_back(currentEmotion);
         if(v.size() ==  10) {
             for(int i = 0; i < v.size(); i++) {
-                sum += v.at(i)
+                sum += v.at(i);
             }
             emo_vector.push_back(sum/v.size());
         }
@@ -30,7 +30,7 @@ void Worker::doWork()
     sum = 0;
     // song finishes, compute the average
     for(int i = 0; i < emo_vector.size(); i++) {
-        sum += emo_vector.at(i)
+        sum += emo_vector.at(i);
     }
     emotion = sum/emo_vector.size();
 
