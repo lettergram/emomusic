@@ -2,6 +2,7 @@
 #define WORKER_H
 
 #include <QThread>
+#include <QString>
 #include <QVector>
 #include <QMutex>
 
@@ -10,13 +11,16 @@ class Worker: public QObject
     Q_Object
 
     public:
-        explicit Worker();
+        explicit Worker(QString * s);
+        double getEmotionValue();
 
     private:
-        Qvector emo_vector; // main vector, each element is an average of 10 second intervals
-        double getMood();
-        int getDuration();
+        QString * songTitle;
+        double emotion;
 
+        double getMood();
+        int getSongTitle();
+        
     signals:
         void finished();
     

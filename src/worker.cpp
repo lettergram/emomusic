@@ -1,8 +1,8 @@
 #include "worker.h"
 
-Worker::Worker() 
+Worker::Worker(QString * s) 
 {
-   // empty constructor
+   songTitle = s;
 }
 
 /**
@@ -10,13 +10,13 @@ Worker::Worker()
 */
 void Worker::doWork() 
 {
-    QVector v;
+    QVector<double> v, emo_vector;
     double sum = 0;
-    int songDuration = getDuration();
+    QString * title = getSongTitle(); // gets the song title
 
-    while(songDuration > 0) {
-        double emotionValue = getMood();
-        v.push_back(emotionValue);
+    while(songTitle.compare(title)  == 0) {
+        double currentEmotion = getMood(); // gets to current mood value
+        v.push_back(currentEmotion);
         if(v.size() ==  10) {
             for(int i = 0; i < v.size(); i++) {
                 sum += v.at(i)
@@ -32,9 +32,9 @@ void Worker::doWork()
     for(int i = 0; i < emo_vector.size(); i++) {
         sum += emo_vector.at(i)
     }
-    double emotion = sum/emo_vector.size();
+    emotion = sum/emo_vector.size();
 
-    // returned the calculated value
+    // need to return the calculated value
     emit finished();
 }
 
@@ -46,9 +46,8 @@ double getMood() {
 }
 
 /**
-* Api call wrapper function.
+* Get the current song playing  
 */
-int getDuration() {
-    return 0; // some call to somewhere... i need music!
+QString getSongTitle() {
+    return "title"; // some call to somewhere...
 }
-
