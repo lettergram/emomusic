@@ -7,7 +7,7 @@
 
 user::user()
 {
-	song_list = NULL;
+    song_list.clear();
 }
 
 user::user(string CSV)
@@ -17,7 +17,7 @@ user::user(string CSV)
 	vector should only have 3 elements = song name, mood, focus*/
 	vector <vector <string> > data; 
 
-	ifstream infile(CSV); //read in CSV file
+    ifstream infile(CSV); //read in CSV file
 
   	while (infile)
   	{
@@ -37,8 +37,8 @@ user::user(string CSV)
     data.push_back( record );
   	}
   	//loop through three indices for a full tsong
-  	for(vector<vector<string>>::iterator it1 = data.begin; it1 != data.end(); ++it){//iterating through all lines of CSV
-  		string name = *it[0];
+    for(vector<vector<std::string>>::iterator it1 = data.begin; it1 != data.end(); ++it){//iterating through all lines of CSV
+        std::string name = *it[0];
   		int mood = *it[1];
   		int focus = *it[2];
 

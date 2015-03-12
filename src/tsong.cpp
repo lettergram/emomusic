@@ -5,7 +5,7 @@ using namespace std;
 
 tsong::tsong()
 {
-	title = "0"
+    title = "0";
 	mood_value = 0;
 	focus_value = 0;
 }
@@ -18,7 +18,7 @@ tsong::tsong(string song_name, int mood, int focus)
 }
 
 //===========getters==================
-string tsong::getTitle()
+std::string tsong::getTitle()
 {
 	return title; 
 }
@@ -34,7 +34,7 @@ int tsong::getFocus()
 }
 
 //===========setters==================
-void tsong::setTitle(string song_title)
+void tsong::setTitle(std::string song_title)
 {
 	title = song_title;
 }
