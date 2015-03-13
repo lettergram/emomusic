@@ -12,6 +12,8 @@ class Worker: public QObject
 
     public:
         explicit Worker(QString * s);
+        ~Worker();
+
         double getEmotionValue();
 
     private:

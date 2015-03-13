@@ -3,6 +3,13 @@
 Worker::Worker(QString * s) 
 {
    songTitle = s;
+   emotion = NULL;
+}
+
+Worker::~Worker() {
+    if(emotion != NULL) {}
+        delete(emotion);
+    }
 }
 
 /**
@@ -32,10 +39,10 @@ void Worker::doWork()
     for(int i = 0; i < emo_vector.size(); i++) {
         sum += emo_vector.at(i);
     }
-    emotion = sum/emo_vector.size();
+    emotion = new double(sum/emo_vector.size();)
 
     // need to return the calculated value
-    emit finished();
+    emit finished(emotion);
 }
 
 /**
