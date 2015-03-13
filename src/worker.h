@@ -20,13 +20,12 @@ class Worker: public QObject
         QString * songTitle;
         double emotion;
 
-        double getMood();
-        int getSongTitle();
-        
     signals:
         void finished();
     
     public slots:
         void doWork();
+        double getMood();
+        int getSongTitle();
 };
 #endif // WORKER_H

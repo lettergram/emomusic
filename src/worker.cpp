@@ -39,11 +39,11 @@ void Worker::doWork()
     for(int i = 0; i < emo_vector.size(); i++) {
         sum += emo_vector.at(i);
     }
-    emotion = new double(sum/emo_vector.size();)
+    emotion = new double(sum/emo_vector.size();
 
     // need to return the calculated value
-    emit finished(emotion);
-}
+    return emotion;
+    }
 
 /**
 * Api call wrapper function.
