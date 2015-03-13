@@ -7,25 +7,25 @@
 
 user::user()
 {
-	song_list = NULL;
+    song_list.clear();
 }
 
-user::user(string CSV)
+user::user(std::string CSV)
 {
 	/*vector of the csv file split by commas. Each vector element contains a vector representing
 	one line in the CSV, which is then further split by commas. If the CSV is set up correctly, the inner 
 	vector should only have 3 elements = song name, mood, focus*/
 	vector <vector <string> > data; 
 
-	ifstream infile(CSV); //read in CSV file
+    std::ifstream infile(CSV.c_str()); //read in CSV file
 
   	while (infile)
   	{
    	 string s;
    	 if (!getline( infile, s )) break;
 
- 	   istringstream ss( s );
-    	vector <string> record;
+ 	   std::istringstream ss( s );
+    	std::vector <string> record;
 
  	   	while (ss)
    	 	{
@@ -37,10 +37,11 @@ user::user(string CSV)
     data.push_back( record );
   	}
   	//loop through three indices for a full tsong
-  	for(vector<vector<string>>::iterator it1 = data.begin; it1 != data.end(); ++it){//iterating through all lines of CSV
-  		string name = *it[0];
-  		int mood = *it[1];
-  		int focus = *it[2];
+    for(int i = 0; i < data.size(); i++){//iterating through all lines of CSV
+        std::string name = data[i][0];
+  		int mood = std::stoi(data[i][1]);
+  		int focus = std::stoi(data[i][2]);
+      std::cout<<mood<<endl;
 
   		tsong temp(name, mood, focus);
   		song_list.push_back(temp);//appending tsong to the list
