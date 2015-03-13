@@ -12,22 +12,27 @@ user::user(){
 }
 
 user::user(std::string CSV){
-	/*vector of the csv file split by commas. Each vector element contains a vector representing
+
+    /*std::vector of the csv file split by commas. Each std::vector element contains a std::vector representing
 	one line in the CSV, which is then further split by commas. If the CSV is set up correctly, the inner 
-	vector should only have 3 elements = song name, mood, focus*/
-	vector <vector <string> > data; 
+    std::vector should only have 3 elements = song name, mood, focus*/
+
+    std::vector <std::vector <std::string> > data;
+
+    fileName = CSV;
 
     std::ifstream infile(CSV.c_str()); //read in CSV file
 
   	while (infile){
-   	 string s;
+     std::string s;
    	 if (!getline( infile, s )) break;
 
- 	   std::istringstream ss( s );
-    	std::vector <string> record;
+       std::istringstream ss( s );
+        std::vector <std::string> record;
 
+        // each line
  	   	while (ss){
-     		string s;
+            std::string s;
       		if (!getline( ss, s, ',' )) break;
       		record.push_back( s );
     	}
@@ -36,25 +41,67 @@ user::user(std::string CSV){
   	}
   	//loop through three indices for a full tsong
 
-    for(int i = 0; i < data.size(); i++){//iterating through all lines of CSV
+    for(unsigned int i = 0; i < data.size(); i++){//iterating through all lines of CSV
         std::string name = data[i][0];
         int mood = QString::fromStdString(data[i][1]).toInt();
         int focus = QString::fromStdString(data[i][2]).toInt();
-      std::cout<<mood<<endl;
+        int count = QString::fromStdString(data[i][3]).toInt();
+        std::cout<<mood<<std::endl;
 
-  		tsong temp(name, mood, focus);
+        tsong temp(name, mood, focus, count);
   		song_list.push_back(temp);//appending tsong to the list
   	}
 
 }
 
-vector<tsong> user::load(){
+user::~user(){
+    writeToFile();
+}
+
+std::vector<tsong> user::load(){
 	return song_list;
 }
 
-void user::add(string song_name, int mood, int focus){
-	tsong temp(song_name, mood, focus);
+tsong * user::getSong(std::string song_name){
+    for(unsigned int i = 0; i < song_list.size(); i++){
+        if(song_name.compare(song_list[i].getTitle()) == 0){
+            return &song_list[i];
+        }
+    }
+    return NULL;
+}
+
+bool user::update(std::string song_name, int mood, int focus){
+    for(unsigned int i = 0; i < song_list.size(); i++){
+        if(song_name.compare(song_list[i].getTitle()) == 0){
+            song_list[i].setMood(mood + song_list[i].getMood());
+            song_list[i].setFocus(focus + song_list[i].getFocus());
+            song_list[i].setCount(song_list[i].getCount());
+            return true;
+        }
+    }
+    return false;
+}
+
+void user::add(std::string song_name, int mood, int focus){
+
+    if(update(song_name, mood, focus))
+        return;
+
+    tsong temp(song_name, mood, focus, 1);
   	song_list.push_back(temp);
 }
 
+void user::writeToFile(){
 
+    std::ofstream outfile;
+    outfile.open(fileName.c_str(), std::ofstream::out | std::ofstream::app); //write in CSV file
+
+    for(unsigned int i = 0; i < song_list.size(); i++){
+        outfile << song_list[i].getTitle() << ",";
+        outfile << song_list[i].getMood() << ",";
+        outfile << song_list[i].getFocus() << ",";
+        outfile << song_list[i].getCount() << ",";
+        outfile << "\n";
+    }
+}

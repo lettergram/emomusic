@@ -28,6 +28,8 @@ musicPlayer::musicPlayer(QWidget *parent) :
     whiteDoubleArrowIcon->addPixmap(whiteArrow);
     ui->moodBox->setItemIcon(moodIndex, *whiteDoubleArrowIcon);
 
+    emo = new remotiv();
+
     skipIcon();
     playIcon();
 }
@@ -289,11 +291,72 @@ void musicPlayer::updateTime(qint64 progress){
     ui->timeSlider->setMaximum(player->duration());
     ui->timeSlider->setValue(progress);
 
+    std::cout << progress << std::endl;
+
     if(player->duration() < 1)
         return;
 
+    emo->tryReadingEEG(); // log emotional state
+    updateMoodLabels();
+
     ui->timeLabel->setText(songCurrent() + "/" + songDuration());
     displayMetadata(); // TODO Change
+}
+
+/**
+ *
+ *    [0] frustration score
+ *    [1] boredom score
+ *    [2] meditation score
+ *    [3] excitment score
+ * @brief musicPlayer::updateMoodLabels -
+ *              update the mood labels for the users
+ */
+void musicPlayer::updateMoodLabels(){
+
+    std::vector<double> mentalState = emo->getCurrentMentalState();
+
+    if(mentalState.size() < 4){ return; }
+
+    // Negative is frustration, positive is meditation
+    double mood = 100 * (mentalState[2] - mentalState[0]);
+    if(mood == 0){
+        ui->moodLabel->setText("Undefined");
+    }else if(mood > 35.0){
+        ui->moodLabel->setText("Super Happy");
+    }else if(mood > 15.0){
+        ui->moodLabel->setText("Happy");
+    }else if(mood > 5.0){
+        ui->moodLabel->setText("Feeling Good");
+    }else if(mood <= 5.0 && mood >= -5.0){
+        ui->moodLabel->setText("Neutral");
+    }else if(mood > -15){
+        ui->moodLabel->setText("Irritated");
+    }else if(mood > -35){
+        ui->moodLabel->setText("Annoyed");
+    }else{
+        ui->moodLabel->setText("Frustrated");
+    }
+
+    // Negative is boredom, positive is excitment
+    double wakefullness = 100 * (mentalState[3] - mentalState[1]);
+    if(wakefullness == 0){
+        ui->wakefulnessLabel->setText("Undefined");
+    }else if(wakefullness > 35.0){
+        ui->wakefulnessLabel->setText("Energized!");
+    }else if(wakefullness > 15.0){
+        ui->wakefulnessLabel->setText("Wide Awake");
+    }else if(wakefullness > 5.0){
+        ui->wakefulnessLabel->setText("Attentive");
+    }else if(wakefullness <= 5.0 && wakefullness >= -5.0){
+        ui->wakefulnessLabel->setText("Observent");
+    }else if(wakefullness > -15){
+        ui->wakefulnessLabel->setText("Tired");
+    }else if(wakefullness > -35){
+        ui->wakefulnessLabel->setText("Yawnful");
+    }else{
+        ui->wakefulnessLabel->setText("Sleepy");
+    }
 }
 
 
@@ -313,7 +376,6 @@ void musicPlayer::on_songList_doubleClicked(const QModelIndex &index){
 }
 
 void musicPlayer::on_moodBox_activated(const QString &arg1){
-    std::cout << arg1.toStdString() << std::endl;
     ui->moodBox->setItemIcon(moodIndex, QIcon());
     moodIndex = ui->moodBox->currentIndex();
     ui->moodBox->setItemIcon(moodIndex, *whiteDoubleArrowIcon);

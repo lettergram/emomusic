@@ -5,15 +5,20 @@
 #include <fstream>
 #include <stdlib.h>
 #include "tsong.h"
-using namespace std;
 
 class user{ 
 	public:
-		user(); 				//default constructor
-		user(string CSV); //constructor, one input song name
-        vector<tsong> load();   //load the list of songs (vector)
-		void add(string song_name, int mood, int focus); //append a tsong to song_list
+        user();                                                   //default constructor
+        user(std::string CSV);                                    //constructor, one input song name
+        ~user();                                                  //default deconstructor
+        std::vector<tsong> load();                                //load the list of songs (vector)
+
+        tsong * getSong(std::string song_name);                   //gets song
+        void add(std::string song_name, int mood, int focus);     //append a tsong to song_list
+        bool update(std::string song_name, int mood, int focus);  //updates song name, returns true if successful
 	private:
-        vector<tsong> song_list;
+        std::vector<tsong> song_list;
+        std::string fileName;
+        void writeToFile();
 };
 #endif 

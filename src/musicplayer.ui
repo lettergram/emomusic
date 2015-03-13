@@ -13,6 +13,12 @@
     <height>600</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="font">
    <font>
     <pointsize>14</pointsize>
@@ -61,6 +67,24 @@
 	color: white;
 }
 
+#newUserButton {
+	 background-color: rgb(213, 23, 133);
+     border-style: outset;
+     border-width: 2px;
+     border-radius: 10px;
+     border-color: beige;
+     font: bold 14px;
+     min-width: 4em;
+     padding: 1px;
+	 color: rgb(255, 255, 255);
+}
+
+#newUserButton:pressed {
+    background-color: rgb(255,255,255);
+	color: rgb(239, 129, 245);
+    border-style: inset;
+ }
+
 #waveView {
 	border-style: outset;
     border-width: 5px;
@@ -105,7 +129,6 @@
 	color: rgb(239, 129, 245);
     border-style: inset;
  }
-
 #skipButton {
 	 background-color: rgb(213, 23, 133);
      border-style: outset;
@@ -198,221 +221,23 @@ QLabel {
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="15" column="7">
-     <widget class="QLabel" name="volumeLabel">
-      <property name="minimumSize">
-       <size>
-        <width>100</width>
-        <height>20</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>140</width>
-        <height>20</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>14</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Volume Control</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="16" column="7">
-     <widget class="QSlider" name="volumeSlider">
-      <property name="maximumSize">
-       <size>
-        <width>140</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QSlider::groove:horizontal {
-border: 1px solid #bbb;
-background: white;
-height: 13px;
-border-radius: 4px;
-}
-
-QSlider::sub-page:horizontal {
-background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0.369, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(223, 19, 124, 255));
-border: 1px solid rgb(142, 18, 74);
-height: 4px;
-border-radius: 4px;
-}
-
-QSlider::add-page:horizontal {
-background: rgb(230, 230, 230);
-border: 1px solid rgb(117, 24, 58);
-height: 12px;
-border-radius: 4px;
-}
-
-QSlider::handle:horizontal {
-background:qlineargradient(spread:pad, x1:0, y1:0, x2:0.990148, y2:0.71, stop:0 rgba(181, 181, 181, 255), stop:1 rgba(255, 255, 255, 255));
-border: 1px solid #777;
-width: 8px;
-height: 12px;
-margin-top: -3px;
-margin-bottom: -3px;
-border-radius: 4px;
-}
-
-QSlider::handle:horizontal:hover {
-background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #fff, stop:1 #ddd);
-border: 1px solid #444;
-border-radius: 4px;
-}
-
-QSlider::sub-page:horizontal:disabled {
-background: #bbb;
-border-color: #999;
-}
-
-QSlider::add-page:horizontal:disabled {
-background: #eee;
-border-color: #999;
-}
-
-QSlider::handle:horizontal:disabled {
-background: #eee;
-border: 1px solid #aaa;
-border-radius: 4px;
-}</string>
-      </property>
-      <property name="maximum">
-       <number>100</number>
-      </property>
-      <property name="sliderPosition">
-       <number>50</number>
-      </property>
+    <item row="2" column="10">
+     <spacer name="verticalSpacer">
       <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="15" column="4" colspan="2">
-     <widget class="QLabel" name="trackDataLabel">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>550</width>
-        <height>20</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Title/Data/Label</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="16" column="1">
-     <spacer name="horizontalSpacer_3">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+       <enum>Qt::Vertical</enum>
       </property>
       <property name="sizeType">
        <enum>QSizePolicy::Fixed</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
-        <width>5</width>
-        <height>20</height>
+        <width>20</width>
+        <height>5</height>
        </size>
       </property>
      </spacer>
     </item>
-    <item row="16" column="3">
-     <spacer name="horizontalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Fixed</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>5</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="16" column="0">
-     <widget class="QPushButton" name="playPauseButton">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>74</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>50</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="baseSize">
-       <size>
-        <width>0</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>24</width>
-        <height>24</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="7">
-     <widget class="QPushButton" name="loadButton">
-      <property name="minimumSize">
-       <size>
-        <width>74</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Load Track</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="7">
+    <item row="3" column="10">
      <widget class="QComboBox" name="moodBox">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -466,136 +291,27 @@ border-radius: 4px;
       </item>
      </widget>
     </item>
-    <item row="16" column="2">
-     <widget class="QPushButton" name="skipButton">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>74</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>50</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="baseSize">
-       <size>
-        <width>40</width>
-        <height>0</height>
-       </size>
+    <item row="12" column="10">
+     <widget class="QLabel" name="moodLabel">
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
       </property>
       <property name="text">
-       <string/>
+       <string>No Input</string>
       </property>
-      <property name="iconSize">
-       <size>
-        <width>32</width>
-        <height>32</height>
-       </size>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
-    <item row="16" column="4" colspan="2">
-     <widget class="QSlider" name="timeSlider">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QSlider::groove:horizontal {
-border: 1px solid #bbb;
-background: white;
-height: 13px;
-border-radius: 4px;
-}
-
-QSlider::sub-page:horizontal {
-background: rgb(245, 191, 218);
-border: 1px solid rgb(142, 18, 74);
-height: 4px;
-border-radius: 4px;
-}
-
-QSlider::add-page:horizontal {
-background: rgb(245, 191, 218);
-border: 1px solid rgb(117, 24, 58);
-height: 12px;
-border-radius: 4px;
-}
-
-QSlider::handle:horizontal {
-background:qlineargradient(spread:pad, x1:0, y1:0, x2:0.990148, y2:0.71, stop:0 rgba(181, 181, 181, 255), stop:1 rgba(255, 255, 255, 255));
-border: 1px solid #777;
-width: 5px;
-height: 12px;
-margin-top: -4px;
-margin-bottom: -4px;
-border-radius: 3px;
-}
-
-QSlider::handle:horizontal:hover {
-background: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0.603, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(223, 19, 124, 255))
-border: 1px solid #444;
-border-radius: 4px;
-}
-
-QSlider::sub-page:horizontal:disabled {
-background: #bbb;
-border-color: #999;
-}
-
-QSlider::add-page:horizontal:disabled {
-background: #eee;
-border-color: #999;
-}
-
-QSlider::handle:horizontal:disabled {
-background: #eee;
-border: 1px solid #aaa;
-border-radius: 4px;
-}</string>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="tickPosition">
-       <enum>QSlider::TicksBothSides</enum>
-      </property>
-      <property name="tickInterval">
-       <number>60000</number>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="7">
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Fixed</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>5</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="0" column="4" colspan="2">
+    <item row="0" column="4" colspan="5">
      <widget class="QLabel" name="songLabel">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -621,26 +337,23 @@ border-radius: 4px;
       </property>
      </widget>
     </item>
-    <item row="15" column="6">
-     <spacer name="horizontalSpacer_4">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Fixed</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
+    <item row="5" column="10">
+     <widget class="QPushButton" name="newUserButton">
+      <property name="minimumSize">
        <size>
-        <width>5</width>
-        <height>20</height>
+        <width>74</width>
+        <height>30</height>
        </size>
       </property>
-     </spacer>
+      <property name="text">
+       <string>New User #0</string>
+      </property>
+     </widget>
     </item>
-    <item row="1" column="4" rowspan="14" colspan="2">
+    <item row="1" column="4" rowspan="22" colspan="5">
      <widget class="QTreeWidget" name="songList">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -774,8 +487,172 @@ border-radius: 4px;
       </column>
      </widget>
     </item>
-    <item row="0" column="0" colspan="4">
+    <item row="24" column="4" colspan="5">
+     <widget class="QSlider" name="timeSlider">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QSlider::groove:horizontal {
+border: 1px solid #bbb;
+background: white;
+height: 13px;
+border-radius: 4px;
+}
+
+QSlider::sub-page:horizontal {
+background: rgb(245, 191, 218);
+border: 1px solid rgb(142, 18, 74);
+height: 4px;
+border-radius: 4px;
+}
+
+QSlider::add-page:horizontal {
+background: rgb(245, 191, 218);
+border: 1px solid rgb(117, 24, 58);
+height: 12px;
+border-radius: 4px;
+}
+
+QSlider::handle:horizontal {
+background:qlineargradient(spread:pad, x1:0, y1:0, x2:0.990148, y2:0.71, stop:0 rgba(181, 181, 181, 255), stop:1 rgba(255, 255, 255, 255));
+border: 1px solid #777;
+width: 5px;
+height: 12px;
+margin-top: -4px;
+margin-bottom: -4px;
+border-radius: 3px;
+}
+
+QSlider::handle:horizontal:hover {
+background: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0.603, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(223, 19, 124, 255))
+border: 1px solid #444;
+border-radius: 4px;
+}
+
+QSlider::sub-page:horizontal:disabled {
+background: #bbb;
+border-color: #999;
+}
+
+QSlider::add-page:horizontal:disabled {
+background: #eee;
+border-color: #999;
+}
+
+QSlider::handle:horizontal:disabled {
+background: #eee;
+border: 1px solid #aaa;
+border-radius: 4px;
+}</string>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="tickPosition">
+       <enum>QSlider::TicksBothSides</enum>
+      </property>
+      <property name="tickInterval">
+       <number>60000</number>
+      </property>
+     </widget>
+    </item>
+    <item row="23" column="10">
+     <widget class="QLabel" name="volumeLabel">
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>140</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Volume Control</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="24" column="0">
+     <widget class="QPushButton" name="playPauseButton">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>74</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>50</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>24</width>
+        <height>24</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="24" column="1">
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>5</width>
+        <height>5</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="0" colspan="3">
      <widget class="QLabel" name="playlistLabel">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="maximumSize">
        <size>
         <width>16777215</width>
@@ -797,7 +674,212 @@ border-radius: 4px;
       </property>
      </widget>
     </item>
-    <item row="1" column="0" rowspan="14" colspan="4">
+    <item row="1" column="10">
+     <widget class="QPushButton" name="loadButton">
+      <property name="minimumSize">
+       <size>
+        <width>74</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Load Track</string>
+      </property>
+     </widget>
+    </item>
+    <item row="24" column="2">
+     <widget class="QPushButton" name="skipButton">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>74</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>50</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>40</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="23" column="9">
+     <spacer name="horizontalSpacer_4">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>5</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="24" column="3">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>5</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="24" column="10">
+     <widget class="QSlider" name="volumeSlider">
+      <property name="maximumSize">
+       <size>
+        <width>140</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QSlider::groove:horizontal {
+border: 1px solid #bbb;
+background: white;
+height: 13px;
+border-radius: 4px;
+}
+
+QSlider::sub-page:horizontal {
+background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0.369, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(223, 19, 124, 255));
+border: 1px solid rgb(142, 18, 74);
+height: 4px;
+border-radius: 4px;
+}
+
+QSlider::add-page:horizontal {
+background: rgb(230, 230, 230);
+border: 1px solid rgb(117, 24, 58);
+height: 12px;
+border-radius: 4px;
+}
+
+QSlider::handle:horizontal {
+background:qlineargradient(spread:pad, x1:0, y1:0, x2:0.990148, y2:0.71, stop:0 rgba(181, 181, 181, 255), stop:1 rgba(255, 255, 255, 255));
+border: 1px solid #777;
+width: 8px;
+height: 12px;
+margin-top: -3px;
+margin-bottom: -3px;
+border-radius: 4px;
+}
+
+QSlider::handle:horizontal:hover {
+background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #fff, stop:1 #ddd);
+border: 1px solid #444;
+border-radius: 4px;
+}
+
+QSlider::sub-page:horizontal:disabled {
+background: #bbb;
+border-color: #999;
+}
+
+QSlider::add-page:horizontal:disabled {
+background: #eee;
+border-color: #999;
+}
+
+QSlider::handle:horizontal:disabled {
+background: #eee;
+border: 1px solid #aaa;
+border-radius: 4px;
+}</string>
+      </property>
+      <property name="maximum">
+       <number>100</number>
+      </property>
+      <property name="sliderPosition">
+       <number>50</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="23" column="3" colspan="6">
+     <widget class="QLabel" name="trackDataLabel">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>550</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Title/Data/Label</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="23" column="0" colspan="3">
+     <widget class="QLabel" name="timeLabel">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>00:00:00/00:00:00</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" rowspan="22" colspan="4">
      <widget class="QListWidget" name="playList">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
@@ -839,17 +921,51 @@ border-radius: 4px;
       </item>
      </widget>
     </item>
-    <item row="15" column="0" colspan="3">
-     <widget class="QLabel" name="timeLabel">
+    <item row="4" column="10">
+     <spacer name="verticalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>5</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="13" column="10">
+     <widget class="QLabel" name="wakefulnessLabel">
       <property name="font">
        <font>
-        <pointsize>13</pointsize>
+        <pointsize>16</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
       </property>
       <property name="text">
-       <string>00:00:00/00:00:00</string>
+       <string>No Input</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="10">
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <pointsize>20</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+        <underline>true</underline>
+       </font>
+      </property>
+      <property name="text">
+       <string>Mental State</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>

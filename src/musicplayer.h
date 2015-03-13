@@ -11,6 +11,11 @@
 #include <QPixmap>
 #include <QGraphicsScene>
 
+#include "user.h"
+#include "worker.h"
+
+#include "../lib/remotiv.h"
+
 namespace Ui {
     class musicPlayer;
 }
@@ -24,6 +29,7 @@ public:
     ~musicPlayer();
 
 private slots:
+
     void on_playPauseButton_clicked();
     void on_loadButton_clicked();
     void on_skipButton_clicked();
@@ -31,16 +37,18 @@ private slots:
     void on_timeSlider_sliderMoved(int position);
     void updateTime(qint64);
     void on_songList_doubleClicked(const QModelIndex &index);
-
     void on_moodBox_activated(const QString &arg1);
 
 private:
+
     Ui::musicPlayer* ui;
     QMediaPlaylist* playlist;
     QMediaPlayer* player;
     int moodIndex;
     QDir * imageDir;
     QIcon * whiteDoubleArrowIcon;
+
+    remotiv * emo;
 
     QDir* findMusic();
     void addMusic(QDir *, QStringList);
@@ -51,6 +59,8 @@ private:
     void playIcon();
     void pauseIcon();
     void skipIcon();
+
+    void updateMoodLabels();
 };
 
 #endif // MUSICPLAYER_H
