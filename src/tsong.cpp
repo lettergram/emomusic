@@ -10,7 +10,7 @@ tsong::tsong()
 	focus_value = 0;
 }
 
-tsong::tsong(string song_name, int mood, int focus)
+tsong::tsong(std::string song_name, int mood, int focus)
 {
 	title = song_name;
 	mood_value = mood;
