@@ -1,5 +1,9 @@
 #ifndef TSONG_H
 #define TSONG_H
+<<<<<<< HEAD
+=======
+#include <string>
+>>>>>>> 22754309db1245b05cd324510a2924759d795511
 class tsong{ 			//basic song class
 	public:
         tsong(); //default constructor
