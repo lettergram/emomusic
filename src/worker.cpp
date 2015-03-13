@@ -3,25 +3,23 @@
 Worker::Worker(QString * s) 
 {
    songTitle = s;
-   emotion = NULL;
+   emotion = 0;
 }
 
 Worker::~Worker() {
-    if(emotion != NULL) {}
-        delete(emotion);
-    }
+    delete songTitle;
 }
 
 /**
 * Worker thread does work
 */
-void Worker::doWork() 
+double Worker::doWork()
 {
     QVector<double> v, emo_vector;
     double sum = 0;
-    QString * title = getSongTitle(); // gets the song title
+    QString title = getSongTitle(); // gets the song title
 
-    while(songTitle.compare(title)  == 0) {
+    while(songTitle->compare(title)  == 0) {
         double currentEmotion = getMood(); // gets to current mood value
         v.push_back(currentEmotion);
         if(v.size() ==  10) {
@@ -31,7 +29,6 @@ void Worker::doWork()
             emo_vector.push_back(sum/v.size());
         }
         sleep(1);
-        songDuration --;
     }
 
     sum = 0;
@@ -39,7 +36,7 @@ void Worker::doWork()
     for(int i = 0; i < emo_vector.size(); i++) {
         sum += emo_vector.at(i);
     }
-    emotion = new double(sum/emo_vector.size();
+    emotion = double(sum/emo_vector.size());
 
     // need to return the calculated value
     return emotion;
@@ -48,13 +45,13 @@ void Worker::doWork()
 /**
 * Api call wrapper function.
 */
-double getMood() {
+double Worker::getMood() {
     return 0; // api call to the emotiv headset
 }
 
 /**
 * Get the current song playing  
 */
-QString getSongTitle() {
+QString Worker::getSongTitle() {
     return "title"; // some call to somewhere...
 }

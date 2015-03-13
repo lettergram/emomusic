@@ -15,10 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         tsong.cpp\
         user.cpp\
+        worker.cpp\
         musicplayer.cpp
 
 HEADERS  += musicplayer.h\
             user.h\
+            worker.h\
             tsong.h
 
 FORMS    += musicplayer.ui

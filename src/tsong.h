@@ -1,9 +1,7 @@
 #ifndef TSONG_H
 #define TSONG_H
-<<<<<<< HEAD
-=======
 #include <string>
->>>>>>> 22754309db1245b05cd324510a2924759d795511
+#include <stdlib.h>
 class tsong{ 			//basic song class
 	public:
         tsong(); //default constructor
@@ -19,8 +17,8 @@ class tsong{ 			//basic song class
 		void setFocus(int focus);
 	private:
         std::string title;
-		int mood_value; //0(sad)->100(happy)
-        int focus_value;
+        int mood_value;  //0(sad)->100(happy)
+        int focus_value; //0(sleepy)->100(focused!)
 };
 
 #endif

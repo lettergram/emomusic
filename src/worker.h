@@ -8,7 +8,7 @@
 
 class Worker: public QObject
 {  
-    Q_Object
+    //Q_Object
 
     public:
         explicit Worker(QString * s);
@@ -24,8 +24,8 @@ class Worker: public QObject
         void finished();
     
     public slots:
-        void doWork();
+        double doWork();
         double getMood();
-        int getSongTitle();
+        QString getSongTitle();
 };
 #endif // WORKER_H

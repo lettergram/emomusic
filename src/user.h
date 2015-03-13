@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <stdlib.h>
 #include "tsong.h"
 using namespace std;
 
