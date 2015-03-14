@@ -39,6 +39,10 @@ private slots:
     void on_songList_doubleClicked(const QModelIndex &index);
     void on_moodBox_activated(const QString &arg1);
 
+    void on_newUserButton_clicked();
+
+    void on_spinBox_editingFinished();
+
 private:
 
     Ui::musicPlayer* ui;
@@ -47,6 +51,8 @@ private:
     int moodIndex;
     QDir * imageDir;
     QIcon * whiteDoubleArrowIcon;
+
+    int userCount;
 
     remotiv * emo;
 

@@ -50,6 +50,7 @@
     border-width: 5px;
     border-radius: 10px;
     border-color: white;
+    font: bold 14px;
 	background: rgba(255, 255, 255, 0);
     padding: 0px;
 }
@@ -61,6 +62,18 @@
     border-color: white;
 	background: rgba(255, 255, 255, 200);
     padding: 0px;
+}
+
+#spinBox{
+	color:white;
+	background-color: rgb(213, 23, 133, 170);
+    border-style: outset;
+    border-width: 4px;
+    border-radius: 10px;
+    border-color: beige;
+    font: bold 14px;
+    min-width: 3em;
+    padding: 2px;
 }
 
 #songList:targeted {
@@ -291,7 +304,7 @@ QLabel {
       </item>
      </widget>
     </item>
-    <item row="12" column="10">
+    <item row="14" column="10">
      <widget class="QLabel" name="moodLabel">
       <property name="font">
        <font>
@@ -337,6 +350,41 @@ QLabel {
       </property>
      </widget>
     </item>
+    <item row="13" column="10">
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <pointsize>20</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+        <underline>true</underline>
+       </font>
+      </property>
+      <property name="text">
+       <string>Mental State</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="15" column="10">
+     <widget class="QLabel" name="wakefulnessLabel">
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>No Input</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
     <item row="5" column="10">
      <widget class="QPushButton" name="newUserButton">
       <property name="minimumSize">
@@ -346,11 +394,27 @@ QLabel {
        </size>
       </property>
       <property name="text">
-       <string>New User #0</string>
+       <string>New User!</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="4" rowspan="22" colspan="5">
+    <item row="6" column="10">
+     <spacer name="verticalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>5</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="1" column="4" rowspan="24" colspan="5">
      <widget class="QTreeWidget" name="songList">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -487,7 +551,7 @@ QLabel {
       </column>
      </widget>
     </item>
-    <item row="24" column="4" colspan="5">
+    <item row="26" column="4" colspan="5">
      <widget class="QSlider" name="timeSlider">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -560,7 +624,7 @@ border-radius: 4px;
       </property>
      </widget>
     </item>
-    <item row="23" column="10">
+    <item row="25" column="10">
      <widget class="QLabel" name="volumeLabel">
       <property name="minimumSize">
        <size>
@@ -589,7 +653,7 @@ border-radius: 4px;
       </property>
      </widget>
     </item>
-    <item row="24" column="0">
+    <item row="26" column="0">
      <widget class="QPushButton" name="playPauseButton">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -629,7 +693,7 @@ border-radius: 4px;
       </property>
      </widget>
     </item>
-    <item row="24" column="1">
+    <item row="26" column="1">
      <spacer name="horizontalSpacer_2">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -687,7 +751,7 @@ border-radius: 4px;
       </property>
      </widget>
     </item>
-    <item row="24" column="2">
+    <item row="26" column="2">
      <widget class="QPushButton" name="skipButton">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -724,7 +788,7 @@ border-radius: 4px;
       </property>
      </widget>
     </item>
-    <item row="23" column="9">
+    <item row="25" column="9">
      <spacer name="horizontalSpacer_4">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -740,7 +804,7 @@ border-radius: 4px;
       </property>
      </spacer>
     </item>
-    <item row="24" column="3">
+    <item row="26" column="3">
      <spacer name="horizontalSpacer">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -756,7 +820,7 @@ border-radius: 4px;
       </property>
      </spacer>
     </item>
-    <item row="24" column="10">
+    <item row="26" column="10">
      <widget class="QSlider" name="volumeSlider">
       <property name="maximumSize">
        <size>
@@ -829,7 +893,7 @@ border-radius: 4px;
       </property>
      </widget>
     </item>
-    <item row="23" column="3" colspan="6">
+    <item row="25" column="3" colspan="6">
      <widget class="QLabel" name="trackDataLabel">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -856,7 +920,7 @@ border-radius: 4px;
       </property>
      </widget>
     </item>
-    <item row="23" column="0" colspan="3">
+    <item row="25" column="0" colspan="3">
      <widget class="QLabel" name="timeLabel">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -879,7 +943,7 @@ border-radius: 4px;
       </property>
      </widget>
     </item>
-    <item row="1" column="0" rowspan="22" colspan="4">
+    <item row="1" column="0" rowspan="24" colspan="4">
      <widget class="QListWidget" name="playList">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
@@ -901,22 +965,22 @@ border-radius: 4px;
       </property>
       <item>
        <property name="text">
-        <string>Workout Beats</string>
+        <string>Happy</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Study Jam</string>
+        <string>Frustrating</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Gaming</string>
+        <string>Sleepy</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string/>
+        <string>Active</string>
        </property>
       </item>
      </widget>
@@ -937,38 +1001,24 @@ border-radius: 4px;
       </property>
      </spacer>
     </item>
-    <item row="13" column="10">
-     <widget class="QLabel" name="wakefulnessLabel">
+    <item row="7" column="10">
+     <widget class="QSpinBox" name="spinBox">
       <property name="font">
        <font>
-        <pointsize>16</pointsize>
+        <pointsize>-1</pointsize>
         <weight>75</weight>
+        <italic>false</italic>
         <bold>true</bold>
        </font>
       </property>
-      <property name="text">
-       <string>No Input</string>
+      <property name="focusPolicy">
+       <enum>Qt::WheelFocus</enum>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
+      <property name="frame">
+       <bool>true</bool>
       </property>
-     </widget>
-    </item>
-    <item row="11" column="10">
-     <widget class="QLabel" name="label">
-      <property name="font">
-       <font>
-        <pointsize>20</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-        <underline>true</underline>
-       </font>
-      </property>
-      <property name="text">
-       <string>Mental State</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
+      <property name="buttonSymbols">
+       <enum>QAbstractSpinBox::NoButtons</enum>
       </property>
      </widget>
     </item>

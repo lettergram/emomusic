@@ -29,6 +29,7 @@ musicPlayer::musicPlayer(QWidget *parent) :
     ui->moodBox->setItemIcon(moodIndex, *whiteDoubleArrowIcon);
 
     emo = new remotiv();
+    userCount = 0;
 
     skipIcon();
     playIcon();
@@ -272,6 +273,8 @@ void musicPlayer::on_skipButton_clicked(){
     ui->songList->setCurrentItem(next);
     ui->songList->setItemSelected(next,true);
 
+    emo->clearCurrentMentalState();
+
     on_playPauseButton_clicked();
 }
 
@@ -291,12 +294,10 @@ void musicPlayer::updateTime(qint64 progress){
     ui->timeSlider->setMaximum(player->duration());
     ui->timeSlider->setValue(progress);
 
-    std::cout << progress << std::endl;
-
     if(player->duration() < 1)
         return;
 
-    emo->tryReadingEEG(); // log emotional state
+    emo->sampleEEG(userCount); // log emotional state
     updateMoodLabels();
 
     ui->timeLabel->setText(songCurrent() + "/" + songDuration());
@@ -319,7 +320,7 @@ void musicPlayer::updateMoodLabels(){
     if(mentalState.size() < 4){ return; }
 
     // Negative is frustration, positive is meditation
-    double mood = 100 * (mentalState[2] - mentalState[0]);
+    double mood = 100.0 * (mentalState[2] - mentalState[0]);
     if(mood == 0){
         ui->moodLabel->setText("Undefined");
     }else if(mood > 35.0){
@@ -339,7 +340,7 @@ void musicPlayer::updateMoodLabels(){
     }
 
     // Negative is boredom, positive is excitment
-    double wakefullness = 100 * (mentalState[3] - mentalState[1]);
+    double wakefullness = 100.0 * (mentalState[3] - mentalState[1]);
     if(wakefullness == 0){
         ui->wakefulnessLabel->setText("Undefined");
     }else if(wakefullness > 35.0){
@@ -379,4 +380,14 @@ void musicPlayer::on_moodBox_activated(const QString &arg1){
     ui->moodBox->setItemIcon(moodIndex, QIcon());
     moodIndex = ui->moodBox->currentIndex();
     ui->moodBox->setItemIcon(moodIndex, *whiteDoubleArrowIcon);
+}
+
+void musicPlayer::on_newUserButton_clicked(){
+    userCount++;
+    ui->spinBox->setValue(userCount);
+    emo->clearCurrentMentalState();
+}
+
+void musicPlayer::on_spinBox_editingFinished(){
+    userCount = ui->spinBox->value();
 }

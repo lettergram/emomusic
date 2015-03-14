@@ -104,4 +104,19 @@ void user::writeToFile(){
         outfile << song_list[i].getCount() << ",";
         outfile << "\n";
     }
+
+    outfile.close();
+}
+
+std::string user::findSong(int mood, int wakefullness){
+    for(unsigned int i = 0; i < song_list.size(); i++){
+        if(song_list[i].getMood() < song_list[i].getMood() + 20
+        && song_list[i].getMood() > song_list[i].getMood() - 20){
+            if(song_list[i].getFocus() < song_list[i].getFocus() + 20
+            && song_list[i].getFocus() > song_list[i].getFocus() - 20){
+                return  song_list[i].getTitle();
+            }
+        }
+    }
+    return "Nothing";
 }
